@@ -1834,10 +1834,28 @@ body{
     oninput="this.value=this.value.replace(/\D/g,'')"
     placeholder="12 Digit Aadhaar Number">
 </div>
-    <div class="fg"><label>Standard</label><select id="f_std"><option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option></select></div>
+    <div class="fg"><label>Current Standard</label><select id="f_std"><option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option></select></div>
     <div class="fg"><label>Division</label><select id="f_div"><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
     <div class="fg"><label>Reason for Leaving</label><select id="f_reason"><option>Passed Out</option><option>Transfer</option><option>Left Studies</option><option>Sent Up For The S.S.C. Exam Held In Feb/March 2026 & Passed</option><option>Due to parent Request</option></select></div>
     <div class="fg"><label>Admission Date</label><input id="f_admdate" type="date"></div>
+    
+    <div class="fg">
+  <label>Admission Standard</label>
+  <select id="f_admstd">
+    <option>1st</option>
+    <option>2nd</option>
+    <option>3rd</option>
+    <option>4th</option>
+    <option>5th</option>
+    <option>6th</option>
+    <option>7th</option>
+    <option>8th</option>
+    <option>9th</option>
+    <option>10th</option>
+    <option>11th</option>
+    <option>12th</option>
+  </select>
+</div>
     <div class="fg"><label>Leaving Date</label><input id="f_leavdate" type="date"></div>
     <div class="fg">
   <label>Last School Attended</label>
@@ -1960,12 +1978,14 @@ if(aadhaar && aadhaar.length!==12){
     religion:getv('f_religion'),
     caste:getv('f_caste'),
     category:getv('f_category'),
+    admstd:getv('f_admstd'),
 
     gr:getv('f_gr'),
     pen:getv('f_pen'),
     aadhaar:getv('f_aadhaar'),
 
     std:getv('f_std'),
+    admstd:getv('f_admstd'),
     div:getv('f_div'),
 
     reason:getv('f_reason'),
@@ -2017,6 +2037,7 @@ if(aadhaar && aadhaar.length!==12){
 }
 function clearForm(){
 [
+  
 'f_name',
 'f_mother',
 'f_dob',
@@ -2026,6 +2047,7 @@ function clearForm(){
 'f_pen',
 'f_aadhaar',
 'f_admdate',
+'f_admstd',
 'f_leavdate',
 'f_lastschool',
 'f_seatno',
@@ -2033,13 +2055,13 @@ function clearForm(){
 'f_remarks',
 'edit_id'
 ]
-  ['f_nationality','f_religion','f_category','f_std','f_div','f_reason'].forEach(function(id){var e=document.getElementById(id);if(e)e.selectedIndex=0;});
+  ['f_nationality','f_religion','f_category','f_std','f_admstd','f_div','f_reason'].forEach(function(id){var e=document.getElementById(id);if(e)e.selectedIndex=0;});
   document.getElementById('form-title').textContent='Add Student';
 }
 function editStudent(id){
   var s=students.find(function(x){return x.id===id;});if(!s)return;
   setv('edit_id',s.id);setv('f_name',s.name);setv('f_mother',s.mother);setv('f_dob',s.dob);setv('f_birthplace',s.birthplace);setv('f_caste',s.caste);setv('f_gr',s.gr);setv('f_pen',s.pen);setv('f_aadhaar',s.aadhaar);setv('f_admdate',s.admdate);setv('f_leavdate',s.leavdate);
-  setv('f_nationality',s.nationality);setv('f_religion',s.religion);setv('f_category',s.category);setv('f_std',s.std);setv('f_div',s.div);setv('f_reason',s.reason); setv('f_lastschool',s.lastschool);
+  setv('f_nationality',s.nationality);setv('f_admstd',s.admstd);setv('f_religion',s.religion);setv('f_category',s.category);setv('f_std',s.std);setv('f_div',s.div);setv('f_reason',s.reason); setv('f_lastschool',s.lastschool);
 
 setv('f_seatno',s.seatno);
 
@@ -2355,9 +2377,9 @@ esc(s.aadhaar || '—')
   '<td class="val">'+
     '<strong>'+fmtD(s.admdate)+'</strong>'+
   '</td>'+
-  '<td class="lbl">Standard</td>'+
+  '<td class="lbl">Admission Std.</td>'+
   '<td class="val">'+
-    '<strong>'+esc(s.std || '—')+'</strong>'+
+    '<strong>'+esc(s.admstd || '—')+'</strong>'+
   '</td>'+
 '</tr>'+
 
@@ -2377,9 +2399,9 @@ esc(s.aadhaar || '—')
   '<td class="val">'+
     '<strong>'+fmtD(s.leavdate)+'</strong>'+
   '</td>'+
-  '<td class="lbl">Studying in Std / Div</td>'+
+  '<td class="lbl">Studying in Std</td>'+
   '<td class="val">'+
-    '<strong>'+esc(s.std || '—')+' - '+esc(s.div || '—')+'</strong>'+
+    '<strong>'+esc(s.std || '—')+' </strong>'+
   '</td>'+
 '</tr>'+
 
